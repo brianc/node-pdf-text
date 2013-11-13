@@ -28,11 +28,9 @@ pdfText(pathToPdf, function(err, chunks) {
 
 ## api
 
-#### pdfText(string pathToPdfFile, function callback(error, string[], object pdf2json result))
+#### pdfText(string pathToPdfFile, function callback(error, string[]))
 
-Callback receives `string[]` which is what I usually want.
-
-Also receives the parsed pdf data structure from [pdf2json](https://github.com/modesty/pdf2json) if you want to get crazy, but it's a pretty dense and not user-friendly piece of JSON extracted from the belly of [pdf.js](http://mozilla.github.io/pdf.js/).
+Callback receives `string[]` of all the text objects within the pdf.  The array is ordered similarly to how the text appears on the page, making it possible to extract key pieces by finding them based on how they relate to other 'known' pieces of text in the page.
 
 ## license
 

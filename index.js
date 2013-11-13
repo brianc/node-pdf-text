@@ -14,25 +14,17 @@ module.exports = function(path, cb) {
 
     var data = result.data
 
+    var text = []
     //get text on a particular page
     result.data.Pages.forEach(function(page) {
-      page.getText = function() {
-        return _(page.Texts).map('R').flatten().map('T').map(decodeURIComponent).value()
-      }
+      var chunks = _(page.Texts).map('R').flatten().map('T').map(decodeURIComponent).value()
+      text = text.concat(chunks)
     })
 
-    //get text from a page by page number (0 indexed)
-    result.getTextOnPage = function(number) {
-      return data.Pages[number].getText()
-    }
-
-    //get all text in document
-    result.getText = function() {
-      return _(data.Pages).map(function(p) { return p.getText() }).flatten().value()
-    }
-
     parser.destroy()
-    return cb(null, result.getText(), result)
+    setImmediate(function() {
+      cb(null, text)
+    })
   })
 
   parser.on('pdfParser_dataError', function(err) {
