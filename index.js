@@ -12,6 +12,8 @@ module.exports = function(path, cb) {
 
     //attach some handy methods to the result object
 
+    var data = result.data
+
     //get text on a particular page
     result.data.Pages.forEach(function(page) {
       page.getText = function() {
@@ -21,17 +23,21 @@ module.exports = function(path, cb) {
 
     //get text from a page by page number (0 indexed)
     result.getTextOnPage = function(number) {
-      return result.data.Pages[number].getText()
+      return data.Pages[number].getText()
     }
 
     //get all text in document
     result.getText = function() {
-      return _(this.data.Pages).map(function(p) { return p.getText() }).flatten().value()
+      return _(data.Pages).map(function(p) { return p.getText() }).flatten().value()
     }
 
+    parser.destroy()
     return cb(null, result.getText(), result)
   })
 
-  parser.on('pdfParser_dataError', cb)
+  parser.on('pdfParser_dataError', function(err) {
+    parser.destroy()
+    cb(err)
+  })
   parser.loadPDF(path)
 }
