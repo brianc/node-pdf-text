@@ -1,6 +1,6 @@
 {
   "name": "pdf-text",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Extract an array of text chunks from a pdf",
   "main": "index.js",
   "scripts": {
