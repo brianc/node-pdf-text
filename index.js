@@ -10,11 +10,8 @@ module.exports = function(path, cb) {
   var parser = new Parser()
   parser.on('pdfParser_dataReady', function(result) {
 
-    //attach some handy methods to the result object
-
-    var data = result.data
-
     var text = []
+
     //get text on a particular page
     result.data.Pages.forEach(function(page) {
       var chunks = _(page.Texts).map('R').flatten().map('T').map(decodeURIComponent).value()
@@ -22,6 +19,7 @@ module.exports = function(path, cb) {
     })
 
     parser.destroy()
+
     setImmediate(function() {
       cb(null, text)
     })
@@ -31,5 +29,8 @@ module.exports = function(path, cb) {
     parser.destroy()
     cb(err)
   })
+  if(path instanceof Buffer) {
+    return parser.parsePDFBuffer(path)
+  }
   parser.loadPDF(path)
 }

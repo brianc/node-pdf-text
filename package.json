@@ -1,6 +1,6 @@
 {
   "name": "pdf-text",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Extract an array of text chunks from a pdf",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "okay": "~0.3.0"
   },
   "dependencies": {
-    "pdf2json": "~0.5.6",
+    "pdf2json": "https://github.com/RST-J/pdf2json/tarball/master",
     "lodash": "~2.3.0"
   }
 }

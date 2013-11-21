@@ -20,8 +20,17 @@ var pathToPdf = __dirname + "/info.pdf"
 pdfText(pathToPdf, function(err, chunks) {
   //chunks is an array of strings 
   //loosely corresponding to text objects within the pdf
-  
+
   //for a more concrete example, view the test file in this repo
+})
+
+//or parse a buffer of pdf data
+//this is handy when you already have the pdf in memory
+//and don't want to write it to a temp file
+var fs = require('fs')
+var buffer = fs.readFileSync(pathToPdf)
+pdfText(buffer, function(err, chunks) {
+
 })
 
 ```
@@ -31,6 +40,10 @@ pdfText(pathToPdf, function(err, chunks) {
 #### pdfText(string pathToPdfFile, function callback(error, string[]))
 
 Callback receives `string[]` of all the text objects within the pdf.  The array is ordered similarly to how the text appears on the page, making it possible to extract key pieces by finding them based on how they relate to other 'known' pieces of text in the page.
+
+#### pdfText(Buffer bufferOfPdfContents, function callback(error, string[]))
+
+Optionally pass a buffer of pdf data instead of a path to the file.
 
 ## license
 

@@ -2,15 +2,7 @@ var ok = require('okay')
 var pdfText = require('../')
 var assert = require('assert')
 
-describe('pdf-text', function() {
-  before(function(done) {
-    self = this
-    pdfText(__dirname + '/w4.pdf', ok(done, function(text, res) {
-      self.text = text
-      done()
-    }))
-  })
-
+var checkResult = function() {
   it('returns array of text', function() {
     assert(require('util').isArray(this.text))
   })
@@ -30,4 +22,28 @@ describe('pdf-text', function() {
     assert.equal(this.result.getTextOnPage(0).indexOf('Additional amount, if any, you want withheld from each paycheck'), -1)
     assert(this.result.getTextOnPage(1).indexOf('See the instructions for your income tax return.'))
   })
+}
+
+describe('pdf-text', function() {
+  before(function(done) {
+    self = this
+    pdfText(__dirname + '/w4.pdf', ok(done, function(text, res) {
+      self.text = text
+      done()
+    }))
+  })
+  checkResult.call(this)
+})
+
+var fs = require('fs')
+describe('pdf-text from buffer', function() {
+  before(function(done) {
+    var self = this
+    var buffer = fs.readFileSync(__dirname + '/w4.pdf')
+    pdfText(buffer, ok(done, function(text) {
+      self.text = text
+      done()
+    }))
+  })
+  checkResult.call(this)
 })
