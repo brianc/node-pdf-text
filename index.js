@@ -1,5 +1,5 @@
 var _ = require('lodash')
-var Parser = require('pdf2json')
+var Parser = require('pdf3json')
 
 //clear the pdf logger
 require('util')._logN = function() { }
@@ -30,7 +30,7 @@ module.exports = function(path, cb) {
     cb(err)
   })
   if(path instanceof Buffer) {
-    return parser.parsePDFBuffer(path)
+    return parser.parseBuffer(path)
   }
   parser.loadPDF(path)
 }

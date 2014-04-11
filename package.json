@@ -24,7 +24,7 @@
     "okay": "~0.3.0"
   },
   "dependencies": {
-    "pdf2json": "https://github.com/RST-J/pdf2json/tarball/master",
-    "lodash": "~2.3.0"
+    "lodash": "~2.3.0",
+    "pdf3json": "0.2.0"
   }
 }
